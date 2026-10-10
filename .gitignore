@@ -1,0 +1,21 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Godot 4+ cache folder
+.godot/
+
+# Godot 3 export/cache folders
+.import/
+
+# Imported resources
+*.translation
+
+# Mono/C# specifics
+.mono/
+*.csproj
+*.sln
+
+# OS generated files
+.DS_Store
+Thumbs.db
