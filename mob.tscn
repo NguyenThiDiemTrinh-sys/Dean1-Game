@@ -9,7 +9,7 @@ radius = 55.081757
 [sub_resource type="CircleShape2D" id="CircleShape2D_xbp1l"]
 radius = 60.074955
 
-[node name="Mob" type="CharacterBody2D" unique_id=1505903905]
+[node name="Mob" type="CharacterBody2D" unique_id=1505903905 groups=["enemies"]]
 script = ExtResource("1_nokgg")
 
 [node name="Slime" parent="." unique_id=2008890567 instance=ExtResource("1_dy6sc")]

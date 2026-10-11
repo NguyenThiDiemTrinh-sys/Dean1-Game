@@ -36,7 +36,7 @@ position = Vector2(987, 201)
 position = Vector2(912, 532)
 
 [node name="SpawnTimer" type="Timer" parent="." unique_id=53318055]
-wait_time = 5.0
+wait_time = 3.0
 autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="." unique_id=2104940826]
@@ -75,6 +75,13 @@ offset_bottom = 63.0
 theme_override_colors/font_color = Color(0.7933528, 0.19175658, 0.2184419, 1)
 theme_override_font_sizes/font_size = 40
 text = "❤❤❤"
+
+[node name="DrawLine" type="Line2D" parent="UI" unique_id=1915784757]
+width = 8.0
+default_color = Color(0.9786716, 0.43350977, 0.6687976, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="pressed" from="GameOver/RetryButton" to="." method="_on_retry_button_pressed"]
