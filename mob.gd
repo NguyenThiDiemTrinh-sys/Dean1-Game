@@ -28,7 +28,14 @@ func generate_symbols():
 		symbol_container.add_child(label)
 	
 func _physics_process(delta):
-	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * 250.0
-	move_and_slide()
+	if is_instance_valid(player):
+		var direction = global_position.direction_to(player.global_position)
+		velocity = direction * 250.0
+		move_and_slide()
 	
+
+
+func _on_hit_box_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	if body.has_method("take_damage"):
+		body.take_damage()
+		queue_free()
