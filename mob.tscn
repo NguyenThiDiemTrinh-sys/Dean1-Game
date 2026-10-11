@@ -15,3 +15,10 @@ unique_name_in_owner = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1302507979]
 position = Vector2(0, -26)
 shape = SubResource("CircleShape2D_ya3t2")
+
+[node name="SymbolContainer" type="HBoxContainer" parent="." unique_id=708237406]
+offset_left = -28.0
+offset_top = -125.0
+offset_right = 26.0
+offset_bottom = -85.0
+alignment = 1

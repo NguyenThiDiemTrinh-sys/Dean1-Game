@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://bt34el6j70nba"]
 
 [ext_resource type="PackedScene" uid="uid://dthyq14hs0rsm" path="res://player.tscn" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://c4icpwhofs4w7" path="res://survivors_game.gd" id="1_feb5d"]
 [ext_resource type="PackedScene" uid="uid://drgx2bt60ls40" path="res://pine_tree.tscn" id="2_e2o6t"]
-[ext_resource type="PackedScene" uid="uid://bslhndqw0cwub" path="res://mob.tscn" id="3_feb5d"]
 
 [node name="Game" type="Node2D" unique_id=571230464]
 y_sort_enabled = true
+script = ExtResource("1_feb5d")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=488534304]
 layer = -30
@@ -34,5 +35,8 @@ position = Vector2(987, 201)
 [node name="PineTree5" parent="." unique_id=921085484 instance=ExtResource("2_e2o6t")]
 position = Vector2(912, 532)
 
-[node name="Mob" parent="." unique_id=1505903905 instance=ExtResource("3_feb5d")]
-position = Vector2(396, 530)
+[node name="SpawnTimer" type="Timer" parent="." unique_id=53318055]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
