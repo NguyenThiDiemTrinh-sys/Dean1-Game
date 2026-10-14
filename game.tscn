@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bt34el6j70nba"]
 
-[ext_resource type="PackedScene" uid="uid://dthyq14hs0rsm" path="res://player.tscn" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://dthyq14hs0rsm" path="res://characters/player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://c4icpwhofs4w7" path="res://survivors_game.gd" id="1_feb5d"]
-[ext_resource type="PackedScene" uid="uid://drgx2bt60ls40" path="res://pine_tree.tscn" id="2_e2o6t"]
+[ext_resource type="PackedScene" uid="uid://drgx2bt60ls40" path="res://trees/pine_tree.tscn" id="2_e2o6t"]
 
 [node name="Game" type="Node2D" unique_id=571230464]
 y_sort_enabled = true
