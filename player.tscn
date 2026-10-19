@@ -30,6 +30,8 @@
 [ext_resource type="Texture2D" uid="uid://b055unwkbbput" path="res://characters/WitchCat/Walk_0003.png" id="23_1xqrm"]
 [ext_resource type="Texture2D" uid="uid://dyl8tmfj4r3u8" path="res://characters/WitchCat/Walk_0004.png" id="24_bfour"]
 [ext_resource type="Texture2D" uid="uid://bkg12sat22hx3" path="res://characters/WitchCat/Walk_0005.png" id="25_8gr2b"]
+[ext_resource type="Texture2D" uid="uid://bvr0wc0j84o03" path="res://characters/WitchCat/Walk_to_run_down_0001.png" id="26_ny14h"]
+[ext_resource type="Texture2D" uid="uid://btly285lm5a72" path="res://characters/WitchCat/Walk_to_run_down_0002.png" id="27_ibah8"]
 [ext_resource type="Texture2D" uid="uid://dfk46xiod7w3j" path="res://characters/WitchCat/Walking2_0000.png" id="30_ny14h"]
 [ext_resource type="Texture2D" uid="uid://cnwq2k2ru85ws" path="res://characters/WitchCat/Walking2_0001.png" id="31_ibah8"]
 [ext_resource type="Texture2D" uid="uid://cjxeuv50qqi6t" path="res://characters/WitchCat/Walking2_0002.png" id="32_3iwfv"]
@@ -110,6 +112,17 @@ animations = [{
 "speed": 8.0
 }, {
 "frames": [{
+"duration": 1.2,
+"texture": ExtResource("27_ibah8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_ny14h")
+}],
+"loop": 0,
+"name": &"run_to_walk_down",
+"speed": 12.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("16_b88wv")
 }, {
@@ -125,6 +138,17 @@ animations = [{
 "loop": 1,
 "name": &"running",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.2,
+"texture": ExtResource("26_ny14h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_ibah8")
+}],
+"loop": 0,
+"name": &"walk_to_run_down",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -195,4 +219,4 @@ shape = SubResource("CapsuleShape2D_f3nsu")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1425721020]
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_600e7")
-animation = &"idle"
+animation = &"walk_to_run_down"

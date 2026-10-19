@@ -5,6 +5,7 @@ signal player_died
 
 var health = 3 
 var is_hurt = false
+var is_transitioning = false
 
 var walk_speed = 600
 var run_speed = 1000
@@ -20,10 +21,32 @@ func _physics_process(delta):
 	velocity = direction * current_speed
 	move_and_slide()
 	
-	if not is_hurt:
+	if not is_hurt and not is_transitioning:
 		if velocity.length() > 0.0:
 			if current_speed == run_speed:
-				$AnimatedSprite2D.play("running")
+				# Nếu đang đi bộ (walking2) mà đột ngột nhấn Shift -> Kích hoạt chuyển cảnh
+				if $AnimatedSprite2D.animation == "walking2":
+					is_transitioning = true
+					$AnimatedSprite2D.play("walk_to_run_down")
+					
+					# Code sẽ dừng ở đây để đợi 4 frame chuyển tiếp chạy xong
+					await $AnimatedSprite2D.animation_finished 
+					is_transitioning = false # Mở khóa lại
+				
+				# Sau khi mở khóa, tiếp tục phát loop chạy nhanh
+				if not is_transitioning:
+					$AnimatedSprite2D.play("running")
+			elif current_speed == walk_speed:
+				if $AnimatedSprite2D.animation == "running":
+					is_transitioning = true
+					$AnimatedSprite2D.play("run_to_walk_down")
+					
+					# Code sẽ dừng ở đây để đợi 4 frame chuyển tiếp chạy xong
+					await $AnimatedSprite2D.animation_finished 
+					is_transitioning = false # Mở khóa lại
+				# Sau khi mở khóa, tiếp tục phát loop chạy nhanh
+				if not is_transitioning:
+					$AnimatedSprite2D.play("walking2")
 			else:
 				$AnimatedSprite2D.play("walking2")
 		else:
