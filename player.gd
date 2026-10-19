@@ -25,7 +25,7 @@ func _physics_process(delta):
 			if current_speed == run_speed:
 				$AnimatedSprite2D.play("running")
 			else:
-				$AnimatedSprite2D.play("walking")
+				$AnimatedSprite2D.play("walking2")
 		else:
 			$AnimatedSprite2D.play("idle")
 		
@@ -42,7 +42,7 @@ func take_damage():
 	else:
 		# Bật trạng thái bị thương và phát animation
 		is_hurt = true
-		$AnimatedSprite2D.play("hurt")
+		$AnimatedSprite2D.play("hurt2")
 		
 		# Yêu cầu code đợi cho đến khi animation "hurt" chạy xong hoàn toàn
 		await $AnimatedSprite2D.animation_finished
