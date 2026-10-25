@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://culh1qxpsijnl"]
+
+[ext_resource type="Script" uid="uid://dcv8qo7mv52bv" path="res://characters/bomber_mob.gd" id="1_gx1lp"]
+[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="2_8ak8i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ya3t2"]
+radius = 55.081757
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xbp1l"]
+radius = 268.6675
+
+[node name="BomberMob" type="CharacterBody2D" unique_id=1505903905 groups=["enemies"]]
+position = Vector2(1, 1)
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_gx1lp")
+
+[node name="Slime" parent="." unique_id=2008890567 instance=ExtResource("2_8ak8i")]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1302507979]
+position = Vector2(0, -26)
+shape = SubResource("CircleShape2D_ya3t2")
+
+[node name="SymbolContainer" type="HBoxContainer" parent="." unique_id=708237406]
+offset_left = -28.0
+offset_top = -125.0
+offset_right = 26.0
+offset_bottom = -85.0
+alignment = 1
+
+[node name="ExplosionZone" type="Area2D" parent="." unique_id=2104030682]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionZone" unique_id=1796590942]
+position = Vector2(-0.6666667, -24.666668)
+shape = SubResource("CircleShape2D_xbp1l")
+debug_color = Color(0.997397, 0.32770485, 0.42794555, 0.38431373)
+
+[connection signal="body_entered" from="ExplosionZone" to="." method="_on_explosion_zone_body_entered"]

@@ -1,13 +1,15 @@
 extends Node2D
 
-var mob_scene = preload("res://mob.tscn")
+var normal_mob_scene = preload("res://characters/mob.tscn")
+var ranged_mob_scene = preload("res://characters/ranged_mob.tscn") 
+var bomber_mob_scene = preload("res://characters/bomber_mob.tscn")
 
 @onready var health_label = $UI/HealthLabel
 @onready var game_over_screen = $GameOver
 @onready var spawn_timer = $SpawnTimer
 @onready var player = $Player
-
 @onready var draw_line = $UI/DrawLine
+
 var is_drawing = false
 var stroke_points = [] #mảng lưu trữ toạ độ của nét vẽ
 
@@ -26,16 +28,23 @@ func _on_player_died():
 	spawn_timer.stop()
 
 func _on_spawn_timer_timeout():
-	var new_mob = mob_scene.instantiate()
+	var spawn_count = randi_range(1, 3)
 	
-	var random_angle = randf() * 2.0 * PI
-	var spawn_distance = 800.0 
-	
-	var direction = Vector2.RIGHT.rotated(random_angle)
-	var spawn_pos = player.global_position + (direction * spawn_distance)
-	
-	new_mob.global_position = spawn_pos
-	add_child(new_mob)
+	for i in range(spawn_count):
+		
+		var available_mobs = [normal_mob_scene, normal_mob_scene, normal_mob_scene, ranged_mob_scene, ranged_mob_scene,bomber_mob_scene]
+		var selected_mob_scene = available_mobs.pick_random()
+		
+		var new_mob = selected_mob_scene.instantiate()
+		
+		var random_angle = randf() * 2.0 * PI
+		var spawn_distance = 800.0 
+		
+		var direction = Vector2.RIGHT.rotated(random_angle)
+		var spawn_pos = player.global_position + (direction * spawn_distance)
+		
+		new_mob.global_position = spawn_pos
+		add_child(new_mob)
 
 
 func _on_retry_button_pressed():
@@ -60,8 +69,8 @@ func _input(event): #hàm để vẽ
 				var symbol = recognize_gesture(stroke_points)
 				
 				if symbol != "":
-					print("Bạn vừa vẽ hình: ", symbol) # In ra Output để dễ test
-					player.attack(symbol) 
+					if is_instance_valid(player):
+						player.attack(symbol) 
 					
 			draw_line.clear_points()
 

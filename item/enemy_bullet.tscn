@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://d0hklyexxalf5"]
+
+[ext_resource type="Texture2D" uid="uid://dhmkppgvdbj6s" path="res://smoke_explosion/circle_32.png" id="1_1xapl"]
+[ext_resource type="Script" uid="uid://cun4jhho4faqr" path="res://item/enemy_bullet.gd" id="1_k5mnn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ya3t2"]
+radius = 7.071068
+
+[node name="EnemyBullet" type="Area2D" unique_id=410299948]
+script = ExtResource("1_k5mnn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1860091834]
+
+[node name="Circle32" type="Sprite2D" parent="." unique_id=678445108]
+modulate = Color(0.99017066, 0.24733078, 0.31441212, 1)
+position = Vector2(0, -1)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_1xapl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=75971322]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_ya3t2")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1099719808]
+rect = Rect2(-7, -8, 14, 14)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
