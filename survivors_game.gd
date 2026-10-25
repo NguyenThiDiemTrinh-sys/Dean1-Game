@@ -51,6 +51,10 @@ func _on_retry_button_pressed():
 	get_tree().reload_current_scene()
 
 func _input(event): #hàm để vẽ 
+	#Thêm 2 hàng fix lỗi chết vẫn vẽ được. 
+	if not is_instance_valid(player):
+		return
+		
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT: #bấm chuột trái bắt đầu vẽ
 		if event.pressed == true:
 			is_drawing = true
