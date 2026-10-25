@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dthyq14hs0rsm"]
 
 [ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://nj8uy1wjd6sx" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://nj8uy1wjd6sx" path="res://characters/player.gd" id="1_onrkg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l52a2"]
 radius = 36.687874
