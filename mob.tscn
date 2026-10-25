@@ -6,7 +6,10 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ya3t2"]
 radius = 55.081757
 
-[node name="Mob" type="CharacterBody2D" unique_id=1505903905]
+[sub_resource type="CircleShape2D" id="CircleShape2D_xbp1l"]
+radius = 60.074955
+
+[node name="Mob" type="CharacterBody2D" unique_id=1505903905 groups=["enemies"]]
 script = ExtResource("1_nokgg")
 
 [node name="Slime" parent="." unique_id=2008890567 instance=ExtResource("1_dy6sc")]
@@ -22,3 +25,12 @@ offset_top = -125.0
 offset_right = 26.0
 offset_bottom = -85.0
 alignment = 1
+
+[node name="HitBox" type="Area2D" parent="." unique_id=2104030682]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1796590942]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_xbp1l")
+debug_color = Color(0.997397, 0.32770485, 0.42794555, 0.38431373)
+
+[connection signal="body_shape_entered" from="HitBox" to="." method="_on_hit_box_body_shape_entered"]
