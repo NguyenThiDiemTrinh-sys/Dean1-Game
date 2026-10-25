@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bp523wndqjj47"]
+
+[ext_resource type="Script" uid="uid://bfphscnuvm265" path="res://item/item_heart.gd" id="1_wy0tp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ya3t2"]
+radius = 20.22375
+
+[node name="itemHeart" type="Area2D" unique_id=2118113506]
+script = ExtResource("1_wy0tp")
+
+[node name="Label" type="Label" parent="." unique_id=1048522249]
+offset_left = -28.0
+offset_top = -29.0
+offset_right = 27.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0.9165628, 0, 0.12744784, 1)
+theme_override_font_sizes/font_size = 40
+text = "❤"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1629555408]
+shape = SubResource("CircleShape2D_ya3t2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

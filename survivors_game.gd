@@ -3,6 +3,10 @@ extends Node2D
 var normal_mob_scene = preload("res://characters/mob.tscn")
 var ranged_mob_scene = preload("res://characters/ranged_mob.tscn") 
 var bomber_mob_scene = preload("res://characters/bomber_mob.tscn")
+#item
+var item_heart_scene = preload("res://item/item_heart.tscn")
+var item_shield_scene = preload("res://item/item_shield.tscn")
+var item_book_scene = preload("res://item/item_book.tscn")
 
 @onready var health_label = $UI/HealthLabel
 @onready var game_over_screen = $GameOver
@@ -12,6 +16,7 @@ var bomber_mob_scene = preload("res://characters/bomber_mob.tscn")
 
 var is_drawing = false
 var stroke_points = [] #mảng lưu trữ toạ độ của nét vẽ
+var kill_count = 0 #đếm số quái chết để spawn item
 
 func _ready():
 	player.health_changed.connect(_on_player_health_changed)
@@ -44,6 +49,7 @@ func _on_spawn_timer_timeout():
 		var spawn_pos = player.global_position + (direction * spawn_distance)
 		
 		new_mob.global_position = spawn_pos
+		new_mob.mob_died.connect(_on_mob_died) 
 		add_child(new_mob)
 
 
@@ -121,3 +127,23 @@ func recognize_gesture(points: Array) -> String:#thuật toán nhận diện
 			return "^"
 			
 	return ""
+
+func _on_mob_died(death_position): #đếm số lượng quái để spawn item
+	kill_count += 1 
+	if kill_count % 10 == 0:
+		drop_random_item(death_position)
+
+func drop_random_item(drop_pos):
+
+	var available_items = [
+		item_heart_scene, item_heart_scene, 
+		item_shield_scene, item_shield_scene, 
+		item_book_scene
+	]
+	
+	var selected_item_scene = available_items.pick_random() #lấy item ngẫu nhiên
+	
+	var new_item = selected_item_scene.instantiate() #tạo item bỏ vào chỗ báo con quái chết
+	new_item.global_position = drop_pos
+	
+	add_child(new_item)
