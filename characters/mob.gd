@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal mob_died(death_position)
+
 const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")
 
 @onready var player = get_node("/root/Game/Player")
@@ -63,4 +65,5 @@ func die():
 	var smoke = SMOKE_SCENE.instantiate()
 	smoke.global_position = global_position
 	get_parent().add_child(smoke)
+	mob_died.emit(global_position)#báo toạ độ quái khi chết
 	queue_free()

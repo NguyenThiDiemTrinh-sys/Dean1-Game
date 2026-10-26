@@ -9,6 +9,9 @@ var is_transitioning = false
 var is_attacking = false # Khóa di chuyển khi đang vẽ/đánh
 var combo_step = 0
 
+var max_health = 3 #này phụ cho item hồi máu thoi 
+var is_shielded = false #kiểm tra khiên
+
 var walk_speed = 600
 var run_speed = 1000
 
@@ -59,10 +62,12 @@ func _physics_process(delta):
 				$AnimatedSprite2D.play("walking2")
 		else:
 			$AnimatedSprite2D.play("idle")
-		
-	
-		
+
+
+
 func take_damage():
+	if is_shielded == true: #này của item khiên
+		return
 	if is_hurt: 
 		return
 	health -= 1 
@@ -128,6 +133,53 @@ func sort_by_distance(a, b):
 	var dist_a = global_position.distance_squared_to(a.global_position)
 	var dist_b = global_position.distance_squared_to(b.global_position)
 	return dist_a < dist_b
+
+# Hàm hồi máu
+func heal():
+	# Chỉ hồi máu khi số máu hiện tại đang nhỏ hơn máu tối đa
+	if health < max_health:
+		health += 1
+		health_changed.emit(health) 
+		return true # Trả về true là ăn được tim
+	else:
+		return false # Trả về false là không ăn được tim
+
+#Hàm khiên	
+func activate_shield():
+	is_shielded = true
+	queue_redraw() 
 	
+	await get_tree().create_timer(5.0).timeout #bật khiên 5 giây
 	
+	is_shielded = false
+	queue_redraw() 
 	
+func _draw(): #vẽ tạm cái khiên ngu ngu nữa sửa sau
+	if is_shielded == true:
+		var shield_color = Color(0.2, 0.5, 1.0, 0.4)
+		draw_circle(Vector2.ZERO, 60.0, shield_color)
+		
+		draw_arc(Vector2.ZERO, 60.0, 0, 2*PI, 30, Color(0.0, 0.8, 1.0), 3.0)
+		
+#item sách
+func use_magic_book():
+	print("Kích hoạt Sách Phép! Quét sạch quái vật!")
+	
+	var shockwave = Sprite2D.new() #vẽ đỡ hiệu ứng item sách nữa sửa sau
+	# Lấy tạm hình tròn trắng
+	shockwave.texture = preload("res://smoke_explosion/circle_32.png") 
+	shockwave.modulate = Color(1.0, 0.8, 0.0, 0.8) 
+	shockwave.global_position = global_position
+	get_parent().add_child(shockwave)
+	
+	#phóng to vòng tròn ra gấp 100 lần trong 0.5 giây
+	var tween = create_tween()
+	tween.tween_property(shockwave, "scale", Vector2(100.0, 100.0), 0.5)
+	#phóng xong ròi cho mờ dần
+	tween.parallel().tween_property(shockwave, "modulate", Color(1.0, 0.8, 0.0, 0.0), 0.5)
+	tween.tween_callback(shockwave.queue_free)
+	
+	var all_enemies = get_tree().get_nodes_in_group("enemies") #cho quái toàn màn hình chết hết
+	for enemy in all_enemies:
+		if enemy.has_method("die"):
+			enemy.die()

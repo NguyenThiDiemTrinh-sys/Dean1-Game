@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal mob_died(death_position)
+
 @onready var player = get_node("/root/Game/Player")
 #tao ky hieu tren dau quai
 @onready var symbol_container = $SymbolContainer
@@ -71,6 +73,7 @@ func die():
 	var smoke = SMOKE_SCENE.instantiate()
 	smoke.global_position = global_position
 	get_parent().add_child(smoke)
+	mob_died.emit(global_position)
 	queue_free()
 
 

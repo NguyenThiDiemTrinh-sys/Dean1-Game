@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cgjcsvgipggru"]
+
+[ext_resource type="Texture2D" uid="uid://btowtm2hiyub1" path="res://item/book_asset/books_byBatuhan.png" id="1_83mrp"]
+[ext_resource type="Script" uid="uid://cvv21darnmi7w" path="res://item/item_book.gd" id="1_t4g3k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ya3t2"]
+size = Vector2(41, 55)
+
+[node name="itemBook" type="Area2D" unique_id=1418758704]
+texture_filter = 1
+script = ExtResource("1_t4g3k")
+
+[node name="BooksByBatuhan" type="Sprite2D" parent="." unique_id=147306089]
+position = Vector2(1, 2)
+scale = Vector2(2, 2)
+texture = ExtResource("1_83mrp")
+region_enabled = true
+region_rect = Rect2(130, 0.5, 31, 34)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1282413066]
+position = Vector2(0.5, 1.5)
+shape = SubResource("RectangleShape2D_ya3t2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

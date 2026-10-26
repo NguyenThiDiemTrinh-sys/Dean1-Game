@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dthyq14hs0rsm"]
 
 [ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://nj8uy1wjd6sx" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://nj8uy1wjd6sx" path="res://characters/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://c7l0eyktwyivk" path="res://characters/ground_shadow_final.png" id="2_ek41f"]
 [ext_resource type="Texture2D" uid="uid://bgt4txv6r6tpc" path="res://characters/WitchCat/Hurt_0001.png" id="3_hl5qd"]
 [ext_resource type="Texture2D" uid="uid://c1vwbbfxkipqp" path="res://characters/WitchCat/Combat_0003.png" id="4_fddr8"]
@@ -278,6 +278,7 @@ position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_f3nsu")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1560099548]
+zoom = Vector2(0.7, 0.7)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1425721020]
 scale = Vector2(0.8, 0.8)
