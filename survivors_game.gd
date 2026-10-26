@@ -43,7 +43,7 @@ func _on_spawn_timer_timeout():
 		var new_mob = selected_mob_scene.instantiate()
 		
 		var random_angle = randf() * 2.0 * PI
-		var spawn_distance = 800.0 
+		var spawn_distance = 1000.0 
 		
 		var direction = Vector2.RIGHT.rotated(random_angle)
 		var spawn_pos = player.global_position + (direction * spawn_distance)
