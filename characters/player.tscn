@@ -69,6 +69,9 @@ animations = [{
 }, {
 "duration": 2.5,
 "texture": ExtResource("7_5ef02")
+}, {
+"duration": 0.8,
+"texture": ExtResource("8_pfmca")
 }],
 "loop": 0,
 "name": &"attack_1_down",
@@ -83,6 +86,9 @@ animations = [{
 }, {
 "duration": 3.0,
 "texture": ExtResource("10_b4uyv")
+}, {
+"duration": 0.8,
+"texture": ExtResource("11_tw8ou")
 }],
 "loop": 0,
 "name": &"attack_2_down",
@@ -283,4 +289,4 @@ zoom = Vector2(0.7, 0.7)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1425721020]
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_600e7")
-animation = &"attack_3_down"
+animation = &"attack_1_down"
