@@ -88,8 +88,15 @@ func take_damage():
 		
 func die():
 	print("Game Over!")
-	# để tạm
-	queue_free()
+	# Dừng hoạt động của Player
+	set_physics_process(false)
+
+	# Tắt va chạm
+	$CollisionShape2D.set_deferred("disabled", true)
+
+	# Ẩn hình ảnh nhân vật
+	$AnimatedSprite2D.hide()
+	$Sprite2D.hide()
 		
 func attack(symbol: String):
 	# enemies là để nhắm vào những con quái có trên màn hình
