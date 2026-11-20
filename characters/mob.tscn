@@ -1,13 +1,52 @@
 [gd_scene format=3 uid="uid://bslhndqw0cwub"]
 
 [ext_resource type="Script" uid="uid://cn2u4icgl8qcs" path="res://characters/mob.gd" id="1_nokgg"]
-[ext_resource type="Texture2D" uid="uid://l1uxsix31rh8" path="res://characters/BlueSpirit/BlueSpirit.png" id="2_xtcgg"]
+[ext_resource type="Texture2D" uid="uid://s3wrvk7namaj" path="res://characters/BlueSpirit/Walking_0000.png" id="2_wrtvv"]
+[ext_resource type="Texture2D" uid="uid://0bt45knsvcd3" path="res://characters/BlueSpirit/Walking_0001.png" id="3_fyj2g"]
+[ext_resource type="Texture2D" uid="uid://cyyp1umven8v2" path="res://characters/BlueSpirit/Walking_0002.png" id="4_u2s7f"]
+[ext_resource type="Texture2D" uid="uid://cwflwuomkpv7n" path="res://characters/BlueSpirit/Walking_0003.png" id="5_ud6fx"]
+[ext_resource type="Texture2D" uid="uid://ccjnv4hgjk5fd" path="res://characters/BlueSpirit/Walking_0004.png" id="6_m5qys"]
+[ext_resource type="Texture2D" uid="uid://c0y30vq5xd73d" path="res://characters/BlueSpirit/Walking_0005.png" id="7_y82bk"]
+[ext_resource type="Texture2D" uid="uid://5ol8lx1hfrs3" path="res://characters/BlueSpirit/Walking_0006.png" id="8_jcw3q"]
+[ext_resource type="Texture2D" uid="uid://bq6j07wakv3yu" path="res://characters/BlueSpirit/Walking_0007.png" id="9_w545s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ya3t2"]
 radius = 46.010868
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xbp1l"]
-radius = 60.074955
+radius = 52.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t4o4o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wrtvv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fyj2g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_u2s7f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ud6fx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_m5qys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_y82bk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jcw3q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_w545s")
+}],
+"loop": 1,
+"name": &"walking",
+"speed": 10.0
+}]
 
 [node name="Mob" type="CharacterBody2D" unique_id=1505903905 groups=["enemies"]]
 script = ExtResource("1_nokgg")
@@ -18,9 +57,9 @@ shape = SubResource("CircleShape2D_ya3t2")
 
 [node name="SymbolContainer" type="HBoxContainer" parent="." unique_id=708237406]
 offset_left = -28.0
-offset_top = -140.0
+offset_top = -145.0
 offset_right = 26.0
-offset_bottom = -100.0
+offset_bottom = -105.0
 alignment = 1
 
 [node name="HitBox" type="Area2D" parent="." unique_id=2104030682]
@@ -30,9 +69,13 @@ position = Vector2(0, -16)
 shape = SubResource("CircleShape2D_xbp1l")
 debug_color = Color(0.997397, 0.32770485, 0.42794555, 0.38431373)
 
-[node name="EnemySprite" type="Sprite2D" parent="." unique_id=1637456086]
+[node name="EnemySprite" type="AnimatedSprite2D" parent="." unique_id=1193166464]
 position = Vector2(0, -30.000002)
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("2_xtcgg")
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_t4o4o")
+animation = &"walking"
+autoplay = "walking"
+frame = 1
+frame_progress = 0.17836419
 
 [connection signal="body_shape_entered" from="HitBox" to="." method="_on_hit_box_body_shape_entered"]
