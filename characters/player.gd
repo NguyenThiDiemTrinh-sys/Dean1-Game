@@ -99,13 +99,14 @@ func die():
 	$Sprite2D.hide()
 		
 func attack(symbol: String):
-	# enemies là để nhắm vào những con quái có trên màn hình
+	# enemies là để nhắm vào những con quái trên map
 	var all_enemies = get_tree().get_nodes_in_group("enemies")
 	
 	for enemy in all_enemies:
-		enemy.check_symbol(symbol)
+		if is_enemy_on_screen(enemy): # kiểm tra quái có trên màn hình không
+			enemy.check_symbol(symbol)
 		
-	#Xử lý combo 
+	# Xử lý combo 
 	if is_attacking and combo_step == 1:
 		combo_step = 2
 	elif is_attacking and combo_step == 2:
@@ -190,3 +191,9 @@ func use_magic_book():
 	for enemy in all_enemies:
 		if enemy.has_method("die"):
 			enemy.die()
+			
+# Hàm kiểm tra xem con quái có đang trong màn hình không
+func is_enemy_on_screen(enemy: Node2D) -> bool:
+	var screen_rect = get_viewport().get_visible_rect()
+	var enemy_screen_pos = enemy.get_global_transform_with_canvas().origin #tính toạ độ của quái và toạ độ của camera
+	return screen_rect.has_point(enemy_screen_pos)
