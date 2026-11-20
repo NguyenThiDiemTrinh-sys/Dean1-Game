@@ -153,4 +153,4 @@ func drop_random_item(drop_pos):
 	var new_item = selected_item_scene.instantiate() #tạo item bỏ vào chỗ báo con quái chết
 	new_item.global_position = drop_pos
 	
-	add_child(new_item)
+	call_deferred("add_child", new_item)
