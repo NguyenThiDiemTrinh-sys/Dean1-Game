@@ -188,5 +188,5 @@ func use_magic_book():
 	
 	var all_enemies = get_tree().get_nodes_in_group("enemies") #cho quái toàn màn hình chết hết
 	for enemy in all_enemies:
-		if enemy.has_method("die"):
+		if not enemy.is_in_group("boss") and enemy.has_method("die"):
 			enemy.die()
