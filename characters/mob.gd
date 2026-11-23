@@ -13,7 +13,6 @@ const AVAILABLE_SYMBOLS = ["-","|","v","^"]#danh sach ky hieu mai mot sua sau
 var current_symbols = []
 
 func _ready():
-	%Slime.play_walk()
 	generate_symbols()
 	
 func generate_symbols():

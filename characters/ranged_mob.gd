@@ -15,7 +15,6 @@ const BULLET_SCENE = preload("res://item/enemy_bullet.tscn")
 var shot_count = 0 
 
 func _ready():
-	%Slime.play_walk()
 	generate_symbols()
 	
 func generate_symbols():

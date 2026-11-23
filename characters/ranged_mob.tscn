@@ -1,42 +1,45 @@
 [gd_scene format=3 uid="uid://btvnyvqpuom5k"]
 
 [ext_resource type="Script" uid="uid://bt1wib0uoh6iu" path="res://characters/ranged_mob.gd" id="1_yuueu"]
-[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="2_y45j1"]
+[ext_resource type="Texture2D" uid="uid://cbqdl5kgah6e2" path="res://characters/WhiteGhost/WhiteGhost.png" id="3_y45j1"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ya3t2"]
-radius = 55.081757
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y45j1"]
+radius = 49.999996
+height = 146.99998
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xbp1l"]
-radius = 60.074955
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yuueu"]
+radius = 52.499996
+height = 153.49998
 
 [node name="RangedMob" type="CharacterBody2D" unique_id=1505903905 groups=["enemies"]]
 scale = Vector2(0.8, 0.8)
 script = ExtResource("1_yuueu")
 
-[node name="Slime" parent="." unique_id=2008890567 instance=ExtResource("2_y45j1")]
-unique_name_in_owner = true
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1302507979]
 position = Vector2(0, -26)
-shape = SubResource("CircleShape2D_ya3t2")
+shape = SubResource("CapsuleShape2D_y45j1")
 
 [node name="SymbolContainer" type="HBoxContainer" parent="." unique_id=708237406]
 offset_left = -28.0
-offset_top = -125.0
+offset_top = -147.5
 offset_right = 26.0
-offset_bottom = -85.0
+offset_bottom = -107.5
 alignment = 1
 
 [node name="HitBox" type="Area2D" parent="." unique_id=2104030682]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1796590942]
 position = Vector2(0, -28)
-shape = SubResource("CircleShape2D_xbp1l")
+shape = SubResource("CapsuleShape2D_yuueu")
 debug_color = Color(0.997397, 0.32770485, 0.42794555, 0.38431373)
 
 [node name="ShootTimer" type="Timer" parent="." unique_id=2099391910]
 wait_time = 2.0
 autostart = true
+
+[node name="EnemySprite" type="Sprite2D" parent="." unique_id=469452621]
+position = Vector2(0, -19)
+texture = ExtResource("3_y45j1")
 
 [connection signal="body_shape_entered" from="HitBox" to="." method="_on_hit_box_body_shape_entered"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
