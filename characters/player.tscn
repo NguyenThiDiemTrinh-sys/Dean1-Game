@@ -326,3 +326,6 @@ bus = &"Footsteps"
 [node name="PickupAudio" type="AudioStreamPlayer" parent="." unique_id=1180768213]
 unique_name_in_owner = true
 bus = &"Pickup"
+
+[node name="MagicBlastAudio" type="AudioStreamPlayer" parent="." unique_id=811253816]
+unique_name_in_owner = true

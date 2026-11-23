@@ -29,6 +29,29 @@ damping = 0.6
 dry = 0.9
 wet = 0.15
 
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_5t1r3"]
+resource_name = "Reverb"
+room_size = 0.6
+damping = 0.6
+dry = 0.9
+wet = 0.15
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_n8wo2"]
+resource_name = "Reverb"
+predelay_feedback = 0.3
+room_size = 0.6
+damping = 0.6
+dry = 0.9
+wet = 0.15
+
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_g28q7"]
+resource_name = "EQ"
+band_db/32_hz = 0.9
+band_db/320_hz = -1.6
+band_db/1000_hz = -8.6
+band_db/3200_hz = -16.3
+band_db/10000_hz = -19.4
+
 [resource]
 bus/1/name = &"Footsteps"
 bus/1/solo = false
@@ -62,3 +85,21 @@ bus/4/mute = false
 bus/4/bypass_fx = false
 bus/4/volume_db = -9.209199
 bus/4/send = &"Master"
+bus/5/name = &"Explosions"
+bus/5/solo = false
+bus/5/mute = false
+bus/5/bypass_fx = false
+bus/5/volume_db = 5.028986
+bus/5/send = &"Master"
+bus/5/effect/0/effect = SubResource("AudioEffectReverb_5t1r3")
+bus/5/effect/0/enabled = true
+bus/6/name = &"MagicBlast"
+bus/6/solo = false
+bus/6/mute = false
+bus/6/bypass_fx = false
+bus/6/volume_db = -4.504105
+bus/6/send = &"Master"
+bus/6/effect/0/effect = SubResource("AudioEffectReverb_n8wo2")
+bus/6/effect/0/enabled = true
+bus/6/effect/1/effect = SubResource("AudioEffectEQ_g28q7")
+bus/6/effect/1/enabled = true

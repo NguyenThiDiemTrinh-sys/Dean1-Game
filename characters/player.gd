@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var spell_audio = $SpellAudio
 @onready var hurt_audio = $HurtAudio
 @onready var pickup_audio = $PickupAudio
+@onready var magic_blast_audio = $MagicBlastAudio
 
 const SPELL_SOUNDS = [
 	preload("res://audio/sfx/spells/spell.1.wav"),
@@ -19,6 +20,7 @@ const FOOTSTEP_SOUNDS = [
 
 const HURT_SOUNDS = preload("res://audio/sfx/hurt/hurt.wav")
 const PICKUP_SOUND = preload("res://audio/sfx/pickup/pickup.wav")
+const MAGIC_BLAST_SOUND = preload("res://audio/sfx/explode/magicblast.wav")
 
 signal health_changed(new_health)
 signal player_died
@@ -136,6 +138,11 @@ func play_pickup():
 	pickup_audio.stream = PICKUP_SOUND
 	pickup_audio.pitch_scale = randf_range(0.95, 1.05)
 	pickup_audio.play()
+	
+func play_magic_blast():
+	magic_blast_audio.stream = MAGIC_BLAST_SOUND
+	magic_blast_audio.pitch_scale = randf_range(0.95, 1.05)
+	magic_blast_audio.play()
 
 func take_damage():
 	play_hurt()
@@ -246,6 +253,7 @@ func _draw(): #vẽ tạm cái khiên ngu ngu nữa sửa sau
 		
 #item sách
 func use_magic_book():
+	play_magic_blast()
 	play_pickup()
 	print("Kích hoạt Sách Phép! Quét sạch quái vật!")
 	
