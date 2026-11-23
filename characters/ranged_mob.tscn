@@ -8,8 +8,8 @@ radius = 49.999996
 height = 146.99998
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yuueu"]
-radius = 49.999996
-height = 148.49998
+radius = 52.499996
+height = 153.49998
 
 [node name="RangedMob" type="CharacterBody2D" unique_id=1505903905 groups=["enemies"]]
 scale = Vector2(0.8, 0.8)

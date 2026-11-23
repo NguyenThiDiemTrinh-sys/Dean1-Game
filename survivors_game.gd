@@ -86,12 +86,15 @@ func _input(event): #hàm để vẽ
 			is_drawing = true
 			stroke_points.clear() 
 			draw_line.clear_points() 
+			stroke_points.append(event.position)
+			draw_line.add_point(event.position)
 			
 		elif event.pressed == false:
 			is_drawing = false
+			stroke_points.append(event.position)
 			
 			# kiểm tra độ dài nét vẽ tránh click nhầm
-			if stroke_points.size() > 5:
+			if stroke_points.size() >= 3:
 				var symbol = recognize_gesture(stroke_points)
 				
 				if symbol != "":
@@ -105,48 +108,50 @@ func _input(event): #hàm để vẽ
 		stroke_points.append(event.position) 
 		draw_line.add_point(event.position)
 		
-func recognize_gesture(points: Array) -> String:#thuật toán nhận diện
-	# Tìm ra khung chữ nhật bao quanh nét vẽ (Điểm xa nhất các hướng)
-	var min_x = points[0].x; var max_x = points[0].x
-	var min_y = points[0].y; var max_y = points[0].y
-	var min_y_index = 0; var max_y_index = 0
+func recognize_gesture(points: Array) -> String:
+	if points.size() < 3:
+		return ""
+		
+	var p_start = points[0]
+	var p_end = points[points.size() - 1]
 	
-	for i in range(points.size()):
-		var p = points[i]
+	# Tìm khung bao quanh nét vẽ
+	var min_x = p_start.x; var max_x = p_start.x
+	var min_y = p_start.y; var max_y = p_start.y
+	
+	for p in points:
 		if p.x < min_x: min_x = p.x
 		if p.x > max_x: max_x = p.x
-		if p.y < min_y:
-			min_y = p.y; min_y_index = i 
-		if p.y > max_y:
-			max_y = p.y; max_y_index = i 
-			
-	# Tính chiều rộng (dx) và chiều cao (dy) của nét vẽ
+		if p.y < min_y: min_y = p.y
+		if p.y > max_y: max_y = p.y
+		
 	var dx = max_x - min_x
 	var dy = max_y - min_y
 	
-	if dx < 30 and dy < 30: 
+	# Chống click nhầm (nếu quẹt ngắn dưới 25px thì bỏ qua)
+	if dx < 25 and dy < 25:
 		return ""
-
-	# THUẬT TOÁN ĐỌC HÌNH:
-	# Nếu chiều Rộng lớn hơn chiều Cao gấp rưỡi -> Đó là nét Ngang
-	if dx > dy * 1.5:
+		
+	# Đo độ võng xuống cho chữ "v" (đáy max_y phải thấp hơn hẳn CẢ điểm đầu và điểm cuối)
+	var v_depth = min(max_y - p_start.y, max_y - p_end.y)
+	
+	# Đo độ nhọn lên cho dấu "^" (đỉnh min_y phải cao hơn hẳn CẢ điểm đầu và điểm cuối)
+	var caret_height = min(p_start.y - min_y, p_end.y - min_y)
+	
+	# Ngưỡng gấp khúc tối thiểu (giúp phân biệt chữ v/^ thật với nét thẳng vẽ hơi run tay)
+	var min_bend = max(20.0, max(dx, dy) * 0.25)
+	
+	# 1. Kiểm tra chữ V và dấu Mũ TRƯỚC (bất kể vẽ hẹp, rộng hay lệch cạnh vẫn trúng!)
+	if v_depth >= min_bend and v_depth > caret_height:
+		return "v"
+	elif caret_height >= min_bend and caret_height > v_depth:
+		return "^"
+		
+	# 2. Nếu không gấp khúc -> Nó là nét thẳng (- hoặc |)
+	if dx >= dy:
 		return "-"
-		
-	# Nếu chiều Cao lớn hơn chiều Rộng gấp rưỡi -> Đó là nét Dọc
-	elif dy > dx * 1.5:
-		return "|"
-		
-	# Nếu Rộng và Cao sàn sàn nhau -> Nó là chữ V hoặc Dấu Mũ
 	else:
-		var total_points = points.size()
-		# Nếu cái đáy (điểm thấp nhất max_y) nằm ở khúc GIỮA nét vẽ -> Chữ V
-		if max_y_index > total_points * 0.2 and max_y_index < total_points * 0.8:
-			return "v"
-		# Nếu cái đỉnh (điểm cao nhất min_y) nằm ở khúc GIỮA nét vẽ -> Dấu Mũ ^
-		elif min_y_index > total_points * 0.2 and min_y_index < total_points * 0.8:
-			return "^"
-			
-	return ""
+		return "|"
 
 func _on_mob_died(death_position): #đếm số lượng quái để spawn item
 	if is_boss_fight == true:
@@ -212,3 +217,13 @@ func _on_boss_defeated():
 		draw_line.clear_points()
 		victory_screen.show()
 		get_tree().paused = true
+
+
+func _on_main_menu_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://main_menu.tscn")
+
+
+func _on_main_menu_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://main_menu.tscn")
