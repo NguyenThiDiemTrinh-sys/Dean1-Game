@@ -8,6 +8,7 @@ signal mob_died(death_position)
 @onready var slime_sprite = $EnemySprite # Lấy hình ảnh con Slime để lát đổi màu
 
 const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")
+const EXPLODE_SOUND = preload("res://audio/sfx/explode/explode.wav")
 
 const AVAILABLE_SYMBOLS = ["-","|","v","^"]#danh sach ky hieu mai mot sua sau
 var current_symbols = []
@@ -88,6 +89,7 @@ func start_explosion():
 	explode()
 	
 func explode():
+	play_explosion_sound()
 	var smoke = SMOKE_SCENE.instantiate()
 	smoke.global_position = global_position
 	smoke.scale = Vector2(2.0, 2.0) #làm cho cục khói to hơn
@@ -100,6 +102,19 @@ func explode():
 			body.take_damage()
 			
 	queue_free()
+	
+func play_explosion_sound():
+	var explosion_audio = AudioStreamPlayer2D.new()
+
+	explosion_audio.stream = EXPLODE_SOUND
+	explosion_audio.bus = "Explosions"
+	explosion_audio.pitch_scale = randf_range(0.9, 1.1)
+
+	get_parent().add_child(explosion_audio)
+	explosion_audio.global_position = global_position
+
+	explosion_audio.finished.connect(explosion_audio.queue_free)
+	explosion_audio.play()
 	
 func _draw(): #hien thi khu vuc nos
 	if is_fusing == true:

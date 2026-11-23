@@ -293,9 +293,11 @@ shape = SubResource("CapsuleShape2D_f3nsu")
 zoom = Vector2(0.7, 0.7)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1425721020]
+unique_name_in_owner = true
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_600e7")
-animation = &"attack_3_down"
+animation = &"running"
+frame = 2
 
 [node name="ShieldBar" type="ProgressBar" parent="." unique_id=442770964]
 visible = false
@@ -308,3 +310,22 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_xbp1l")
 max_value = 5.0
 value = 5.0
 show_percentage = false
+
+[node name="FootstepAudio" type="AudioStreamPlayer" parent="." unique_id=641902165]
+unique_name_in_owner = true
+bus = &"Footsteps"
+
+[node name="SpellAudio" type="AudioStreamPlayer" parent="." unique_id=542825407]
+unique_name_in_owner = true
+bus = &"Spells"
+
+[node name="HurtAudio" type="AudioStreamPlayer" parent="." unique_id=869674991]
+unique_name_in_owner = true
+bus = &"Footsteps"
+
+[node name="PickupAudio" type="AudioStreamPlayer" parent="." unique_id=1180768213]
+unique_name_in_owner = true
+bus = &"Pickup"
+
+[node name="MagicBlastAudio" type="AudioStreamPlayer" parent="." unique_id=811253816]
+unique_name_in_owner = true

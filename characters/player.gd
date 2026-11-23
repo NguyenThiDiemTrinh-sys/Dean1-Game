@@ -1,5 +1,27 @@
 extends CharacterBody2D
 
+@onready var animated_sprite = $AnimatedSprite2D
+@onready var footstep_audio = $FootstepAudio
+@onready var spell_audio = $SpellAudio
+@onready var hurt_audio = $HurtAudio
+@onready var pickup_audio = $PickupAudio
+@onready var magic_blast_audio = $MagicBlastAudio
+
+const SPELL_SOUNDS = [
+	preload("res://audio/sfx/spells/spell.1.wav"),
+	preload("res://audio/sfx/spells/spell.2.wav")
+]
+const FOOTSTEP_SOUNDS = [
+	preload("res://audio/sfx/footsteps/step.1.wav"),
+	preload("res://audio/sfx/footsteps/step.2.wav"),
+	preload("res://audio/sfx/footsteps/step.3.wav"),
+	preload("res://audio/sfx/footsteps/step.4.wav")
+]
+
+const HURT_SOUNDS = preload("res://audio/sfx/hurt/hurt.wav")
+const PICKUP_SOUND = preload("res://audio/sfx/pickup/pickup.wav")
+const MAGIC_BLAST_SOUND = preload("res://audio/sfx/explode/magicblast.wav")
+
 signal health_changed(new_health)
 signal player_died
 
@@ -19,6 +41,7 @@ var run_speed = 1000
 
 #2 hàm bổ sung cho thanh thời gian của khiên
 func _ready():
+	animated_sprite.frame_changed.connect(_on_frame_changed)
 	$ShieldBar.max_value = shield_duration
 	$ShieldBar.step = 0.01
 	$ShieldBar.hide()
@@ -81,9 +104,48 @@ func _physics_process(delta):
 		else:
 			$AnimatedSprite2D.play("idle")
 
+func _on_frame_changed():
+	# Không phát tiếng bước chân khi nhân vật đứng yên
+	if get_real_velocity().length() < 5.0:
+		return
 
+	match animated_sprite.animation:
+		"walking2":
+			if animated_sprite.frame in [0, 3]:
+				play_footstep()
+
+		"running":
+			if animated_sprite.frame in [1, 3]:
+				play_footstep()
+
+#sounds processing
+func play_footstep():
+	footstep_audio.stream = FOOTSTEP_SOUNDS.pick_random()
+	footstep_audio.pitch_scale = randf_range(0.9, 1.1)
+	footstep_audio.play()
+	
+func play_spell():
+	spell_audio.stream = SPELL_SOUNDS.pick_random()
+	spell_audio.pitch_scale = randf_range(0.85, 1.15)
+	spell_audio.play()
+	
+func play_hurt():
+	spell_audio.stream = HURT_SOUNDS
+	spell_audio.pitch_scale = randf_range(0.85, 1.15)
+	spell_audio.play()
+	
+func play_pickup():
+	pickup_audio.stream = PICKUP_SOUND
+	pickup_audio.pitch_scale = randf_range(0.95, 1.05)
+	pickup_audio.play()
+	
+func play_magic_blast():
+	magic_blast_audio.stream = MAGIC_BLAST_SOUND
+	magic_blast_audio.pitch_scale = randf_range(0.95, 1.05)
+	magic_blast_audio.play()
 
 func take_damage():
+	play_hurt()
 	if is_shielded == true: #này của item khiên
 		return
 	if is_hurt: 
@@ -118,6 +180,7 @@ func die():
 	$ShieldBar.hide()
 		
 func attack(symbol: String):
+	play_spell()
 	# enemies là để nhắm vào những con quái trên map
 	var all_enemies = get_tree().get_nodes_in_group("enemies")
 	
@@ -167,12 +230,14 @@ func heal():
 	if health < max_health:
 		health += 1
 		health_changed.emit(health) 
+		play_pickup()
 		return true # Trả về true là ăn được tim
 	else:
 		return false # Trả về false là không ăn được tim
 
 #Hàm khiên	
 func activate_shield():
+	play_pickup()
 	is_shielded = true
 	shield_time_left = shield_duration # nếu đang có sẵn khiên thì hồi lại tg
 	$ShieldBar.value = shield_duration
@@ -188,6 +253,8 @@ func _draw(): #vẽ tạm cái khiên ngu ngu nữa sửa sau
 		
 #item sách
 func use_magic_book():
+	play_magic_blast()
+	play_pickup()
 	print("Kích hoạt Sách Phép! Quét sạch quái vật!")
 	
 	var shockwave = Sprite2D.new() #vẽ đỡ hiệu ứng item sách nữa sửa sau
