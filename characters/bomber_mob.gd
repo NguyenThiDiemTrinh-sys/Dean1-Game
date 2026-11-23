@@ -5,7 +5,7 @@ signal mob_died(death_position)
 @onready var player = get_node("/root/Game/Player")
 #tao ky hieu tren dau quai
 @onready var symbol_container = $SymbolContainer
-@onready var slime_sprite = %Slime # Lấy hình ảnh con Slime để lát đổi màu
+@onready var slime_sprite = $EnemySprite # Lấy hình ảnh con Slime để lát đổi màu
 
 const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")
 
@@ -15,7 +15,6 @@ var current_symbols = []
 var is_fusing = false 
 
 func _ready():
-	%Slime.play_walk()
 	generate_symbols()
 	
 func generate_symbols():
