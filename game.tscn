@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bmo5851uy0hth" path="res://decorations/banner_red.png" id="7_eow3j"]
 [ext_resource type="Texture2D" uid="uid://4dsp826gfaa7" path="res://decorations/window.png" id="8_j5wjh"]
 [ext_resource type="FontFile" uid="uid://bdix12ldp8il6" path="res://fonts/PottaOne-Regular.ttf" id="9_potta"]
+[ext_resource type="PackedScene" uid="uid://dwa86aqtxfla" path="res://tutorial.tscn" id="10_hve3p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya3t2"]
 bg_color = Color(0.1, 0.1, 0.1, 0.7)
@@ -459,6 +460,8 @@ theme_override_fonts/font = ExtResource("9_potta")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_j0vtg")
 text = "Main Menu"
+
+[node name="Tutorial" parent="." unique_id=1062111970 instance=ExtResource("10_hve3p")]
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="pressed" from="GameOver/RetryButton" to="." method="_on_retry_button_pressed"]
