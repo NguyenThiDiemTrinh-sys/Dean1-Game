@@ -3,6 +3,7 @@ extends Node2D
 var normal_mob_scene = preload("res://characters/mob.tscn")
 var ranged_mob_scene = preload("res://characters/ranged_mob.tscn") 
 var bomber_mob_scene = preload("res://characters/bomber_mob.tscn")
+var boss_scene = preload("res://characters/boss.tscn")
 #item
 var item_heart_scene = preload("res://item/item_heart.tscn")
 var item_shield_scene = preload("res://item/item_shield.tscn")
@@ -10,17 +11,29 @@ var item_book_scene = preload("res://item/item_book.tscn")
 
 @onready var health_label = $UI/HealthLabel
 @onready var game_over_screen = $GameOver
+@onready var victory_screen = $Victory
 @onready var spawn_timer = $SpawnTimer
 @onready var player = $Player
 @onready var draw_line = $UI/DrawLine
+@onready var boss_timer = $BossTimer
+@onready var boss_progress_bar = $UI/BossProgressBar
 
 var is_drawing = false
 var stroke_points = [] #mảng lưu trữ toạ độ của nét vẽ
 var kill_count = 0 #đếm số quái chết để spawn item
+var is_boss_fight = false # Dùng để tắt rớt item khi đang đánh Boss
 
 func _ready():
 	player.health_changed.connect(_on_player_health_changed)
 	player.player_died.connect(_on_player_died)
+	# thanh đếm thời gian
+	boss_progress_bar.max_value = boss_timer.wait_time
+	boss_progress_bar.step = 0.01
+	boss_progress_bar.value = 0.0
+	
+func _process(delta):
+	if not is_boss_fight and not boss_timer.is_stopped():
+		boss_progress_bar.value = boss_timer.wait_time - boss_timer.time_left
 	
 func _on_player_health_changed(new_health):
 	var hearts_text = ""
@@ -35,7 +48,7 @@ func _on_player_died():
 	
 	game_over_screen.show()
 	spawn_timer.stop()
-	
+	boss_timer.stop()
 	get_tree().paused = true
 
 func _on_spawn_timer_timeout():
@@ -136,6 +149,8 @@ func recognize_gesture(points: Array) -> String:#thuật toán nhận diện
 	return ""
 
 func _on_mob_died(death_position): #đếm số lượng quái để spawn item
+	if is_boss_fight == true:
+		return
 	kill_count += 1 
 	if kill_count % 10 == 0:
 		drop_random_item(death_position)
@@ -152,5 +167,48 @@ func drop_random_item(drop_pos):
 	
 	var new_item = selected_item_scene.instantiate() #tạo item bỏ vào chỗ báo con quái chết
 	new_item.global_position = drop_pos
-	
 	call_deferred("add_child", new_item)
+
+
+func _on_boss_timer_timeout() -> void:
+	print("=== ĐÃ ĐỦ THỜI GIAN: NGỪNG SPAWN QUÁI & HIỆN SÁCH TRIỆU HỒI! ===")
+	
+	boss_progress_bar.value = boss_progress_bar.max_value
+	spawn_timer.stop()
+	is_boss_fight = true
+	
+	if is_instance_valid(player):
+		var summon_book = item_book_scene.instantiate()
+		summon_book.global_position = player.global_position + Vector2(0, -180)
+		summon_book.make_attract_mode() # Bật hiệu ứng to, chớp sáng & chữ vàng
+		
+		summon_book.book_picked_up.connect(_on_summon_book_picked_up)
+		add_child(summon_book)
+
+func _on_summon_book_picked_up() -> void:
+	print("=== ĐÃ CHẠM SÁCH! QUÉT SẠCH QUÁI & BOSS XUẤT HIỆN! ===")
+	boss_progress_bar.hide()
+	
+	if is_instance_valid(player):
+		var camera = player.get_node_or_null("Camera2D")
+		if is_instance_valid(camera):
+			var cam_tween = create_tween()
+			cam_tween.tween_property(camera, "zoom", Vector2(0.35, 0.35), 1.5).set_trans(Tween.TRANS_SINE)
+			
+		var new_boss = boss_scene.instantiate()
+		new_boss.global_position = player.global_position + Vector2(0, -1200)
+		new_boss.boss_defeated.connect(_on_boss_defeated)
+		
+		call_deferred("add_child", new_boss)
+
+func _on_boss_defeated():
+	print("CHIẾN THẮNG! Đã hạ gục Boss!")
+	await get_tree().create_timer(0.8, false).timeout
+	
+	# Kiểm tra chắc chắn người chơi không bị chết đúng vào 0.8 giây đó
+	if not get_tree().paused and is_instance_valid(player) and player.health > 0:
+		is_drawing = false
+		stroke_points.clear()
+		draw_line.clear_points()
+		victory_screen.show()
+		get_tree().paused = true
