@@ -15,6 +15,7 @@ var item_book_scene = preload("res://item/item_book.tscn")
 @onready var spawn_timer = $SpawnTimer
 @onready var player = $Player
 @onready var draw_line = $UI/DrawLine
+@onready var dungeon_map= $DungeonMap
 @onready var boss_timer = $BossTimer
 @onready var boss_progress_bar = $UI/BossProgressBar
 
@@ -53,22 +54,28 @@ func _on_player_died():
 
 func _on_spawn_timer_timeout():
 	var spawn_count = randi_range(1, 3)
-	
+
 	for i in range(spawn_count):
-		
-		var available_mobs = [normal_mob_scene, normal_mob_scene, normal_mob_scene, ranged_mob_scene, ranged_mob_scene,bomber_mob_scene]
+		var spawn_pos = find_spawn_position()
+
+		if spawn_pos == null:
+			continue
+
+		var available_mobs = [
+			normal_mob_scene,
+			normal_mob_scene,
+			normal_mob_scene,
+			ranged_mob_scene,
+			ranged_mob_scene,
+			bomber_mob_scene
+		]
+
 		var selected_mob_scene = available_mobs.pick_random()
-		
 		var new_mob = selected_mob_scene.instantiate()
-		
-		var random_angle = randf() * 2.0 * PI
-		var spawn_distance = 1000.0 
-		
-		var direction = Vector2.RIGHT.rotated(random_angle)
-		var spawn_pos = player.global_position + (direction * spawn_distance)
-		
-		new_mob.global_position = spawn_pos
-		new_mob.mob_died.connect(_on_mob_died) 
+
+		new_mob.position = to_local(spawn_pos)
+		new_mob.mob_died.connect(_on_mob_died)
+
 		add_child(new_mob)
 
 
@@ -190,10 +197,40 @@ func _on_boss_timer_timeout() -> void:
 		summon_book.book_picked_up.connect(_on_summon_book_picked_up)
 		add_child(summon_book)
 
+func is_valid_spawn_position(world_pos: Vector2) -> bool:
+	var cell = dungeon_map.local_to_map(
+		dungeon_map.to_local(world_pos))
+
+	var tile_data = dungeon_map.get_cell_tile_data(cell)
+
+	# Không có tile: nằm ngoài bản đồ
+	if tile_data == null:
+		return false
+
+	# Tile có collision: không được sinh quái
+	if tile_data.get_collision_polygons_count(0) > 0:
+		return false
+	return true
+	
+func find_spawn_position() -> Variant:
+	var max_attempts = 30
+	var spawn_distance = 1000.0
+
+	for i in range(max_attempts):
+		var angle = randf() * TAU
+		var direction = Vector2.RIGHT.rotated(angle)
+
+		var spawn_pos = player.global_position \
+			+ direction * spawn_distance
+
+		if is_valid_spawn_position(spawn_pos):
+			return spawn_pos
+
+	return null
+  
 func _on_summon_book_picked_up() -> void:
 	print("=== ĐÃ CHẠM SÁCH! QUÉT SẠCH QUÁI & BOSS XUẤT HIỆN! ===")
 	boss_progress_bar.hide()
-	
 	if is_instance_valid(player):
 		var camera = player.get_node_or_null("Camera2D")
 		if is_instance_valid(camera):
