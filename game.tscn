@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dthyq14hs0rsm" path="res://characters/player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://c4icpwhofs4w7" path="res://survivors_game.gd" id="1_feb5d"]
 [ext_resource type="PackedScene" uid="uid://drgx2bt60ls40" path="res://trees/pine_tree.tscn" id="2_e2o6t"]
+[ext_resource type="FontFile" uid="uid://bdix12ldp8il6" path="res://fonts/PottaOne-Regular.ttf" id="4_fc0e3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya3t2"]
 bg_color = Color(0.5729883, 0.5729883, 0.57298815, 1)
@@ -10,31 +11,11 @@ bg_color = Color(0.5729883, 0.5729883, 0.57298815, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbp1l"]
 bg_color = Color(0.99999994, 0.3522361, 0.17346486, 1)
 
-[sub_resource type="FontFile" id="FontFile_ya3t2"]
-cache/0/variation_coordinates = {}
-cache/0/face_index = 0
-cache/0/embolden = 0.0
-cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
-cache/0/spacing_top = 0
-cache/0/spacing_bottom = 0
-cache/0/spacing_space = 0
-cache/0/spacing_glyph = 0
-cache/0/baseline_offset = 0.0
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/60/0/ascent = 0.0
-cache/0/60/0/descent = 0.0
-cache/0/60/0/underline_position = 0.0
-cache/0/60/0/underline_thickness = 0.0
-cache/0/60/0/scale = 1.0
-cache/0/80/0/ascent = 0.0
-cache/0/80/0/descent = 0.0
-cache/0/80/0/underline_position = 0.0
-cache/0/80/0/underline_thickness = 0.0
-cache/0/80/0/scale = 1.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7sn"]
+bg_color = Color(0.92941177, 0.6392157, 0.14901961, 0.53333336)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0vtg"]
+bg_color = Color(0.92941177, 0.6392157, 0.14901961, 0.53333336)
 
 [node name="Game" type="Node2D" unique_id=571230464]
 y_sort_enabled = true
@@ -84,19 +65,55 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.34901962)
 
 [node name="Label" type="Label" parent="GameOver" unique_id=1597080192]
-offset_left = 376.0
-offset_top = 279.0
-offset_right = 778.0
-offset_bottom = 375.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -226.0
+offset_top = -51.5
+offset_right = 226.0
+offset_bottom = 51.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_fc0e3")
 theme_override_font_sizes/font_size = 70
 text = "GAME OVER"
 
 [node name="RetryButton" type="Button" parent="GameOver" unique_id=2065811010]
-offset_left = 533.0
-offset_top = 391.0
-offset_right = 639.0
-offset_bottom = 434.0
+custom_minimum_size = Vector2(200, 60)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 63.0
+offset_right = 100.0
+offset_bottom = 123.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_font_sizes/font_size = 30
 text = "Retry"
+
+[node name="MainMenuButton" type="Button" parent="GameOver" unique_id=678562093]
+custom_minimum_size = Vector2(200, 60)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 140.0
+offset_right = 100.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_font_sizes/font_size = 30
+text = "Main Menu
+"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1714785895]
 
@@ -158,13 +175,14 @@ offset_right = 168.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.8784314, 0.79607844, 0.22352941, 1)
+theme_override_colors/font_color = Color(0.92941177, 0.6392157, 0.14901961, 1)
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = SubResource("FontFile_ya3t2")
+theme_override_fonts/font = ExtResource("4_fc0e3")
 theme_override_font_sizes/font_size = 80
 text = "VICTORY!"
 
 [node name="RetryButton" type="Button" parent="Victory" unique_id=1935309864]
+custom_minimum_size = Vector2(200, 60)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -176,10 +194,32 @@ offset_right = 42.5
 offset_bottom = 63.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_fc0e3")
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_fu7sn")
 text = "Retry"
+
+[node name="MainMenu" type="Button" parent="Victory" unique_id=1584630681]
+custom_minimum_size = Vector2(200, 60)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 85.0
+offset_right = 100.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_j0vtg")
+text = "Main Menu"
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="pressed" from="GameOver/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="GameOver/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="timeout" from="BossTimer" to="." method="_on_boss_timer_timeout"]
 [connection signal="pressed" from="Victory/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="Victory/MainMenu" to="." method="_on_main_menu_pressed"]
