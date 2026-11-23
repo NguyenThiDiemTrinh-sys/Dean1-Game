@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://dwa86aqtxfla"]
+
+[ext_resource type="Script" uid="uid://ipix7tt1bpr" path="res://tutorial.gd" id="1_yb1ct"]
+[ext_resource type="FontFile" uid="uid://bdix12ldp8il6" path="res://fonts/PottaOne-Regular.ttf" id="2_ehuit"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya3t2"]
+bg_color = Color(0.9882353, 0.69803923, 0.41568628, 1)
+
+[sub_resource type="Theme" id="Theme_ya3t2"]
+
+[node name="Tutorial" type="CanvasLayer" unique_id=1062111970]
+process_mode = 2
+layer = 10
+script = ExtResource("1_yb1ct")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1411692401]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.06666667)
+
+[node name="Panel" type="Panel" parent="." unique_id=1543756498]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -240.0
+offset_right = 380.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ya3t2")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Panel" unique_id=1766374270]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -140.0
+offset_right = 250.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ya3t2")
+expand = true
+
+[node name="PrevButton" type="Button" parent="Panel" unique_id=214917255]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 36.0
+offset_top = -30.0
+offset_right = 86.0
+offset_bottom = 30.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "<"
+
+[node name="NextButton" type="Button" parent="Panel" unique_id=722849741]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -82.0
+offset_top = -30.0
+offset_right = -32.0
+offset_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = ">"
+
+[node name="DescriptionLabel" type="Label" parent="Panel" unique_id=672310683]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -78.0
+offset_right = 320.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_ehuit")
+theme_override_font_sizes/font_size = 24
+text = "Dùng các phím W A S D để di chuyển"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="DotsContainer" type="HBoxContainer" parent="Panel" unique_id=322503286]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -106.0
+offset_right = 136.0
+offset_bottom = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 15
+
+[node name="SkipButton" type="Button" parent="Panel" unique_id=1740800823]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -87.0
+offset_top = 16.0
+offset_right = -28.0
+offset_bottom = 57.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_ehuit")
+theme_override_font_sizes/font_size = 22
+text = "Skip"
