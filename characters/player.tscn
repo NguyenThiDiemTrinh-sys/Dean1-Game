@@ -276,7 +276,7 @@ bg_color = Color(0.19550195, 0.6913158, 0.78054893, 1)
 script = ExtResource("1_onrkg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1063716469]
-modulate = Color(0.5686275, 0.6666667, 0.6509804, 0.21568628)
+modulate = Color(0.5686275, 0.6666667, 0.6509804, 1)
 position = Vector2(0, -15)
 texture = ExtResource("2_ek41f")
 
