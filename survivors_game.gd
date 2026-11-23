@@ -25,6 +25,7 @@ var kill_count = 0 #đếm số quái chết để spawn item
 var is_boss_fight = false # Dùng để tắt rớt item khi đang đánh Boss
 
 func _ready():
+	AudioManager.play_gameplay()
 	player.health_changed.connect(_on_player_health_changed)
 	player.player_died.connect(_on_player_died)
 	# thanh đếm thời gian
@@ -43,6 +44,7 @@ func _on_player_health_changed(new_health):
 	health_label.text = hearts_text
 	
 func _on_player_died():
+	AudioManager.play_dead()
 	is_drawing = false
 	stroke_points.clear()
 	draw_line.clear_points()
@@ -229,6 +231,7 @@ func find_spawn_position() -> Variant:
 	return null
   
 func _on_summon_book_picked_up() -> void:
+	AudioManager.play_boss()
 	print("=== ĐÃ CHẠM SÁCH! QUÉT SẠCH QUÁI & BOSS XUẤT HIỆN! ===")
 	boss_progress_bar.hide()
 	if is_instance_valid(player):
@@ -244,6 +247,7 @@ func _on_summon_book_picked_up() -> void:
 		call_deferred("add_child", new_boss)
 
 func _on_boss_defeated():
+	AudioManager.play_victory()
 	print("CHIẾN THẮNG! Đã hạ gục Boss!")
 	await get_tree().create_timer(0.8, false).timeout
 	
