@@ -8,6 +8,21 @@
 [ext_resource type="Texture2D" uid="uid://dq6ld12c0fu6v" path="res://tilesets/dungeon_tileset3.png" id="5_ryrav"]
 [ext_resource type="Texture2D" uid="uid://bmo5851uy0hth" path="res://decorations/banner_red.png" id="7_eow3j"]
 [ext_resource type="Texture2D" uid="uid://4dsp826gfaa7" path="res://decorations/window.png" id="8_j5wjh"]
+[ext_resource type="FontFile" uid="uid://bdix12ldp8il6" path="res://fonts/PottaOne-Regular.ttf" id="9_potta"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya3t2"]
+bg_color = Color(0.1, 0.1, 0.1, 0.7)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbp1l"]
+bg_color = Color(0.9, 0.4, 0.1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fc0e3"]
 texture = ExtResource("3_feb5d")
@@ -118,6 +133,20 @@ gradient = SubResource("Gradient_hve3p")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7sn"]
+bg_color = Color(0.8, 0.55, 0.2, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0vtg"]
+bg_color = Color(0.8, 0.55, 0.2, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="Game" type="Node2D" unique_id=571230464]
 y_sort_enabled = true
 script = ExtResource("1_feb5d")
@@ -162,7 +191,7 @@ offset_right = 226.0
 offset_bottom = 51.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_fonts/font = ExtResource("9_potta")
 theme_override_font_sizes/font_size = 70
 text = "GAME OVER"
 
@@ -179,7 +208,7 @@ offset_right = 100.0
 offset_bottom = 123.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_fonts/font = ExtResource("9_potta")
 theme_override_font_sizes/font_size = 30
 text = "Retry"
 
@@ -196,7 +225,7 @@ offset_right = 100.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_fonts/font = ExtResource("9_potta")
 theme_override_font_sizes/font_size = 30
 text = "Main Menu
 "
@@ -218,6 +247,19 @@ default_color = Color(0.9786716, 0.43350977, 0.6687976, 1)
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="BossProgressBar" type="ProgressBar" parent="UI" unique_id=721708909]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -333.0
+offset_top = 24.0
+offset_right = 334.0
+offset_bottom = 51.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ya3t2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xbp1l")
+show_percentage = false
 
 [node name="DungeonMap" type="TileMapLayer" parent="." unique_id=695210534]
 unique_name_in_owner = true
@@ -346,18 +388,6 @@ texture = SubResource("GradientTexture2D_t4o4o")
 position = Vector2(0, 17.999851)
 scale = Vector2(4.7187514, 4.343755)
 texture = SubResource("GradientTexture2D_rf7yd")
-[node name="BossProgressBar" type="ProgressBar" parent="UI" unique_id=721708909]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -333.0
-offset_top = 24.0
-offset_right = 334.0
-offset_bottom = 51.0
-grow_horizontal = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_ya3t2")
-theme_override_styles/fill = SubResource("StyleBoxFlat_xbp1l")
-show_percentage = false
 
 [node name="BossTimer" type="Timer" parent="." unique_id=561499950]
 wait_time = 180.0
@@ -390,7 +420,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.92941177, 0.6392157, 0.14901961, 1)
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_fonts/font = ExtResource("9_potta")
 theme_override_font_sizes/font_size = 80
 text = "VICTORY!"
 
@@ -407,7 +437,7 @@ offset_right = 42.5
 offset_bottom = 63.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_fonts/font = ExtResource("9_potta")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_fu7sn")
 text = "Retry"
@@ -425,7 +455,7 @@ offset_right = 100.0
 offset_bottom = 145.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("4_fc0e3")
+theme_override_fonts/font = ExtResource("9_potta")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_j0vtg")
 text = "Main Menu"
