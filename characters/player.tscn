@@ -69,6 +69,9 @@ animations = [{
 }, {
 "duration": 2.5,
 "texture": ExtResource("7_5ef02")
+}, {
+"duration": 0.8,
+"texture": ExtResource("8_pfmca")
 }],
 "loop": 0,
 "name": &"attack_1_down",
@@ -83,6 +86,9 @@ animations = [{
 }, {
 "duration": 3.0,
 "texture": ExtResource("10_b4uyv")
+}, {
+"duration": 0.8,
+"texture": ExtResource("11_tw8ou")
 }],
 "loop": 0,
 "name": &"attack_2_down",
@@ -260,6 +266,12 @@ animations = [{
 "speed": 9.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya3t2"]
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 0.7058824)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbp1l"]
+bg_color = Color(0.19550195, 0.6913158, 0.78054893, 1)
+
 [node name="Player" type="CharacterBody2D" unique_id=474929513]
 script = ExtResource("1_onrkg")
 
@@ -284,3 +296,15 @@ zoom = Vector2(0.7, 0.7)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_600e7")
 animation = &"attack_3_down"
+
+[node name="ShieldBar" type="ProgressBar" parent="." unique_id=442770964]
+visible = false
+offset_left = -40.0
+offset_top = -85.0
+offset_right = 40.0
+offset_bottom = -73.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ya3t2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xbp1l")
+max_value = 5.0
+value = 5.0
+show_percentage = false

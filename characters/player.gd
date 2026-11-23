@@ -11,9 +11,27 @@ var combo_step = 0
 
 var max_health = 3 #này phụ cho item hồi máu thoi 
 var is_shielded = false #kiểm tra khiên
+var shield_duration = 5.0
+var shield_time_left = 0.0
 
 var walk_speed = 600
 var run_speed = 1000
+
+#2 hàm bổ sung cho thanh thời gian của khiên
+func _ready():
+	$ShieldBar.max_value = shield_duration
+	$ShieldBar.step = 0.01
+	$ShieldBar.hide()
+
+func _process(delta):
+	if is_shielded:
+		shield_time_left -= delta
+		$ShieldBar.value = shield_time_left
+		
+		if shield_time_left <= 0:
+			is_shielded = false
+			$ShieldBar.hide()
+			queue_redraw()
 
 func _physics_process(delta):
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -97,15 +115,17 @@ func die():
 	# Ẩn hình ảnh nhân vật
 	$AnimatedSprite2D.hide()
 	$Sprite2D.hide()
+	$ShieldBar.hide()
 		
 func attack(symbol: String):
-	# enemies là để nhắm vào những con quái có trên màn hình
+	# enemies là để nhắm vào những con quái trên map
 	var all_enemies = get_tree().get_nodes_in_group("enemies")
 	
 	for enemy in all_enemies:
-		enemy.check_symbol(symbol)
+		if is_enemy_on_screen(enemy): # kiểm tra quái có trên màn hình không
+			enemy.check_symbol(symbol)
 		
-	#Xử lý combo 
+	# Xử lý combo 
 	if is_attacking and combo_step == 1:
 		combo_step = 2
 	elif is_attacking and combo_step == 2:
@@ -154,11 +174,9 @@ func heal():
 #Hàm khiên	
 func activate_shield():
 	is_shielded = true
-	queue_redraw() 
-	
-	await get_tree().create_timer(5.0).timeout #bật khiên 5 giây
-	
-	is_shielded = false
+	shield_time_left = shield_duration # nếu đang có sẵn khiên thì hồi lại tg
+	$ShieldBar.value = shield_duration
+	$ShieldBar.show()
 	queue_redraw() 
 	
 func _draw(): #vẽ tạm cái khiên ngu ngu nữa sửa sau
@@ -190,3 +208,9 @@ func use_magic_book():
 	for enemy in all_enemies:
 		if not enemy.is_in_group("boss") and enemy.has_method("die"):
 			enemy.die()
+			
+# Hàm kiểm tra xem con quái có đang trong màn hình không
+func is_enemy_on_screen(enemy: Node2D) -> bool:
+	var screen_rect = get_viewport().get_visible_rect()
+	var enemy_screen_pos = enemy.get_global_transform_with_canvas().origin #tính toạ độ của quái và toạ độ của camera
+	return screen_rect.has_point(enemy_screen_pos)

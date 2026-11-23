@@ -3,10 +3,6 @@ extends Area2D
 var speed = 300.0
 var direction = Vector2.ZERO
 
-<<<<<<< Updated upstream
-func _physics_process(delta):
-	position += direction * speed * delta
-=======
 @export var max_distance = 700.0
 var travelled_distance = 0.0      
 var is_explosive = false
@@ -19,7 +15,6 @@ func _physics_process(delta):
 		if is_explosive:
 			split_explode()
 		queue_free()
->>>>>>> Stashed changes
 	
 func split_explode():#hàm cho đạn nổ
 	var bullet_scene = load("res://item/enemy_bullet.tscn")

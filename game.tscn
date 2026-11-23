@@ -72,6 +72,7 @@ wait_time = 2.0
 autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="." unique_id=2104940826]
+process_mode = 2
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="GameOver" unique_id=1796497102]
