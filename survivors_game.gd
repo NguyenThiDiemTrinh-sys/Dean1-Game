@@ -29,8 +29,14 @@ func _on_player_health_changed(new_health):
 	health_label.text = hearts_text
 	
 func _on_player_died():
+	is_drawing = false
+	stroke_points.clear()
+	draw_line.clear_points()
+	
 	game_over_screen.show()
 	spawn_timer.stop()
+	
+	get_tree().paused = true
 
 func _on_spawn_timer_timeout():
 	var spawn_count = randi_range(1, 3)
@@ -54,11 +60,12 @@ func _on_spawn_timer_timeout():
 
 
 func _on_retry_button_pressed():
+	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 func _input(event): #hàm để vẽ 
 	#Thêm 2 hàng fix lỗi chết vẫn vẽ được. 
-	if not is_instance_valid(player):
+	if get_tree().paused == true or not is_instance_valid(player):
 		return
 		
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT: #bấm chuột trái bắt đầu vẽ
@@ -146,4 +153,4 @@ func drop_random_item(drop_pos):
 	var new_item = selected_item_scene.instantiate() #tạo item bỏ vào chỗ báo con quái chết
 	new_item.global_position = drop_pos
 	
-	add_child(new_item)
+	call_deferred("add_child", new_item)
