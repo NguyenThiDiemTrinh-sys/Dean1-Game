@@ -130,9 +130,9 @@ func play_spell():
 	spell_audio.play()
 	
 func play_hurt():
-	spell_audio.stream = HURT_SOUNDS
-	spell_audio.pitch_scale = randf_range(0.85, 1.15)
-	spell_audio.play()
+	hurt_audio.stream = HURT_SOUNDS
+	hurt_audio.pitch_scale = randf_range(0.85, 1.15)
+	hurt_audio.play()
 	
 func play_pickup():
 	pickup_audio.stream = PICKUP_SOUND

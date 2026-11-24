@@ -321,7 +321,7 @@ bus = &"Spells"
 
 [node name="HurtAudio" type="AudioStreamPlayer" parent="." unique_id=869674991]
 unique_name_in_owner = true
-bus = &"Footsteps"
+bus = &"Hurt"
 
 [node name="PickupAudio" type="AudioStreamPlayer" parent="." unique_id=1180768213]
 unique_name_in_owner = true
